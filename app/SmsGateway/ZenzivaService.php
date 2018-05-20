@@ -34,13 +34,13 @@ class ZenzivaService{
         ];
     }
 
-    public function customerOrderSMS($user, $phone){
+    public function customerOrderSMS($user){
         $sms = "Hi pelanggan LaundryTaxi". $user->name .", Pesanan laundry kamu akan segera dijemput oleh merchant kami, harap pastikan nomor kamu aktif terus yaa!!";
-        $this->send($sms, $phone, $type = '');
+        $this->send($sms, $user->phone, $type = '');
     }
 
-    public function merchantOrderSMS($user, $phone){
-        $sms = "Hi merhcant LaundryTaxi, Ada pesanan laundry untuk kamu dari " . $user->name . ", kamu bisa check di aplikasi kamu sekarang!!";
-        $this->send($sms, $phone, $type = '');
+    public function merchantOrderSMS($merchant){
+        $sms = "Hi merhcant LaundryTaxi, Ada pesanan laundry untuk kamu dari " . $merchant->name . ", kamu bisa check di aplikasi kamu sekarang!!";
+        $this->send($sms, $merchant->phone, $type = '');
     }
 }

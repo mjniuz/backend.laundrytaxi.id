@@ -3,6 +3,7 @@
 namespace App\Order;
 
 use App\Merchant\MerchantRepository;
+use App\SmsGateway\ZenzivaService;
 use App\User\UserRepository;
 
 class OrderService extends OrderRepository{
@@ -30,6 +31,10 @@ class OrderService extends OrderRepository{
         // create order
         $order          = $this->create($user, $merchant, $input);
         if($order){
+            // send sms
+            $sms    = new ZenzivaService();
+            $sms->customerOrderSMS($user);
+            $sms->merchantOrderSMS($merchant);
             return $this->find($order->id);
         }
 
