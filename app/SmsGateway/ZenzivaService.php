@@ -39,8 +39,8 @@ class ZenzivaService{
         $this->send($sms, $user->phone, $type = '');
     }
 
-    public function merchantOrderSMS($merchant){
-        $sms = "Hi merhcant LaundryTaxi, Ada pesanan laundry untuk kamu dari " . $merchant->name . ", kamu bisa check di aplikasi kamu sekarang!!";
+    public function merchantOrderSMS($merchant, $user){
+        $sms = "Hi merhcant LaundryTaxi, Ada pesanan laundry untuk kamu dari " . $user->name . ", ". $user->phone .", kamu bisa check di aplikasi kamu sekarang!!";
         $this->send($sms, $merchant->phone, $type = '');
     }
 }
