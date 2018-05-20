@@ -34,7 +34,7 @@ class OrderService extends OrderRepository{
             // send sms
             $sms    = new ZenzivaService();
             $sms->customerOrderSMS($user);
-            $sms->merchantOrderSMS($merchant);
+            $sms->merchantOrderSMS($merchant, $user);
             return $this->find($order->id);
         }
 
