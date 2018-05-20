@@ -35,7 +35,7 @@ class ZenzivaService{
     }
 
     public function customerOrderSMS($user){
-        $sms = "Hi pelanggan LaundryTaxi". $user->name .", Pesanan laundry kamu akan segera dijemput oleh merchant kami, harap pastikan nomor kamu aktif terus yaa!!";
+        $sms = "Hi pelanggan LaundryTaxi ". $user->name .", Pesanan laundry kamu akan segera dijemput oleh merchant kami, harap pastikan nomor kamu aktif terus yaa!!";
         $this->send($sms, $user->phone, $type = '');
     }
 
