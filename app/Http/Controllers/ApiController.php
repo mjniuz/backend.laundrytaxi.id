@@ -58,4 +58,13 @@ class ApiController extends Controller{
             'data'      => $result
         ]);
     }
+
+    public function checkForUpdate(Request $request){
+        $version    = $request->get('version');
+
+        return response()->json([
+            'status'    => false,
+            'data'      => ''
+        ]);
+    }
 }
