@@ -61,9 +61,13 @@ class ApiController extends Controller{
 
     public function checkForUpdate(Request $request){
         $version    = $request->get('version');
+        $status     = false;
+        if($version != '0.0.3'){
+            $status     = true;
+        }
 
         return response()->json([
-            'status'    => false,
+            'status'    => $status,
             'data'      => ''
         ]);
     }
