@@ -62,7 +62,7 @@ class ApiController extends Controller{
     public function checkForUpdate(Request $request){
         $version    = $request->get('version');
         $status     = false;
-        if($version != '0.0.3'){
+        if($version != '0.0.5'){
             $status     = true;
         }
 
