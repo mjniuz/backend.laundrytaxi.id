@@ -41,4 +41,20 @@ class UserRepository{
         }
         return $randomString;
     }
+
+    public function createPhoneValidation($user){
+        $user->activate_code    = rand(10000,99999);
+        $user->activate_code_expired    = date("Y-m-d H:i:s",strtotime('+3 hours'));
+        $user->save();
+
+        return $user;
+    }
+
+    public function activateUser($user){
+        $user->activated    = date("Y-m-d H:i:s");
+        $user->save();
+
+        return $user;
+
+    }
 }

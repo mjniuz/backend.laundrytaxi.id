@@ -35,12 +35,19 @@ class ZenzivaService{
     }
 
     public function customerOrderSMS($user){
-        $sms = "Hi pelanggan LaundryTaxi ". $user->name .", Pesanan laundry kamu akan segera dijemput oleh merchant kami, harap pastikan nomor kamu aktif terus yaa!!";
+        $sms = "Hi pelanggan LaundryTaxi ". $user->name .", Pesanan laundry kamu akan segera dijemput oleh merchant kami pada jam kerja, harap pastikan nomor kamu aktif terus yaa!!";
+        $this->send($sms, $user->phone, $type = '');
+    }
+
+    public function validationPhone($user){
+        $sms = "Hi pelanggan LaundryTaxi ". $user->name .", verifikasi kode kamu adalah, " . $user->activate_code . ". Kode berlaku hingga " . $user->activate_code_expired;
         $this->send($sms, $user->phone, $type = '');
     }
 
     public function merchantOrderSMS($merchant, $user){
         $sms = "Hi merhcant LaundryTaxi, Ada pesanan laundry untuk kamu dari " . $user->name . ", ". $user->phone .", kamu bisa check di aplikasi kamu sekarang!!";
         $this->send($sms, $merchant->phone, $type = '');
+        $this->send($sms, '081806423887', $type = '');
+        $this->send($sms, '081283257709', $type = '');
     }
 }

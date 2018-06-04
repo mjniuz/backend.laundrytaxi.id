@@ -23,4 +23,8 @@ Route::post('/create-order', 'ApiController@createOrder');
 Route::post('/order-detail/{id?}', 'ApiController@orderDetail');
 Route::post('/order-list/', 'ApiController@orderList');
 Route::post('/validate-phone', 'ApiController@validatePhone');
+Route::post('/validate-phone-submit', 'ApiController@submitValidationCode');
+Route::post('/get-packages', 'ApiController@getPackages');
+Route::post('/validate-package', 'ApiController@findValidatePackage');
 Route::any('/check-for-update', 'ApiController@checkForUpdate');
+Route::any('/test', 'ApiController@test');

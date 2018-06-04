@@ -4,13 +4,15 @@ namespace App\Http\Controllers;
 
 use App\Order\OrderService;
 use App\User\PhoneNumberService;
+use App\User\UserRepository;
 use Illuminate\Http\Request;
 
 class ApiController extends Controller{
-    protected $order_service, $phone_validate;
-    public function __construct(OrderService $orderService, PhoneNumberService $phoneValidate) {
+    protected $order_service, $phone_validate, $user;
+    public function __construct(OrderService $orderService, PhoneNumberService $phoneValidate, UserRepository $user) {
         $this->order_service    = $orderService;
         $this->phone_validate   = $phoneValidate;
+        $this->user             = $user;
     }
 
     public function createOrder(Request $request){
@@ -42,20 +44,77 @@ class ApiController extends Controller{
     public function orderDetail($orderId = null, Request $request){
         $rememberToken  = $request->get('remember_token');
         $result         = $this->order_service->findDetail($rememberToken, $orderId);
+        $packages       = $this->order_service->_allPackage();
+        if(!empty($packages[($result->package_id - 1)]) AND $result){
+            $package    = $packages[($result->package_id - 1)];
+        }else{
+            $package    = $this->order_service->getOldPackage($result->package);
+        }
+        $price      = $this->order_service->_calculateGrandTotal($result, $package);
 
         return response()->json([
             'status'    => (bool)$result,
-            'data'      => $result
+            'data'      => $result,
+            'package'   => $package,
+            'price'     => $price
         ]);
     }
 
     public function validatePhone(Request $request){
         $phone      = $request->get('phone');
+        $rememberToken  = $request->get('remember_token');
         $result     = $this->phone_validate->standardPhone($phone);
+        $needActivation = $this->order_service->needForValidateUserPhone($phone, $rememberToken);
 
         return response()->json([
             'status'    => (bool)$result,
-            'data'      => $result
+            'data'      => $result,
+            'activation' => $needActivation
+        ]);
+    }
+
+    public function resendActivationCode(Request $request){
+        $phone      = $request->get('phone');
+        $result     = $this->phone_validate->standardPhone($phone);
+        $needActivation = $this->order_service->resendActivationCode($phone);
+
+        return response()->json([
+            'status'    => (bool)$result,
+            'data'      => $result,
+            'activation' => $needActivation
+        ]);
+    }
+
+    public function submitValidationCode(Request $request){
+        $phone      = $request->get('phone');
+        $code       = $request->get('activate_code');
+        $result     = $this->order_service->submitValidationCode($phone,$code);
+
+        return response()->json([
+            'status'    => (bool)$result['status'],
+            'data'      => $result['message'],
+            'remember_token'    => ($result['status']) ? $result['user']->remember_token : ''
+        ]);
+    }
+
+    public function getPackages(Request $request){
+        $token      = $request->get('remember_token');
+        $packages   = $this->order_service->getPackages($token);
+
+        return response()->json([
+            'status'    => true,
+            'data'      => $packages
+        ]);
+    }
+
+    public function findValidatePackage(Request $request){
+        $packageId      = $request->get('package');
+        $rememberToken  = $request->get('remember_token');
+        $result         = $this->order_service->findAndValidatePackage($rememberToken, $packageId);
+
+        return response()->json([
+            'status'    => $result['status'],
+            'data'      => $result['message']
         ]);
     }
 
@@ -70,5 +129,9 @@ class ApiController extends Controller{
             'status'    => $status,
             'data'      => ''
         ]);
+    }
+
+    public function test(){
+        dd(date("Y-m-d H:i:s"));
     }
 }
