@@ -156,7 +156,7 @@ class OrderService extends OrderRepository{
             return $this->_packageAddPromo();
         }
 
-        return $this->_packageAddPromo();
+        return $this->_defaultPackages();
     }
 
     public function findAndValidatePackage($token = '', $packageId = null){
