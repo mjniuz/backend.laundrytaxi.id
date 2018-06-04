@@ -63,8 +63,9 @@ class ApiController extends Controller{
     public function validatePhone(Request $request){
         $phone      = $request->get('phone');
         $full_name  = $request->get('full_name');
+        $rememberToken  = $request->get('remember_token');
         $result         = $this->phone_validate->standardPhone($phone);
-        $needActivation = $this->order_service->needForValidateUserPhone($full_name, $result);
+        $needActivation = $this->order_service->needForValidateUserPhone($full_name, $result, $rememberToken);
 
         return response()->json([
             'status'    => (bool)$result,
