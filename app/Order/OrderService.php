@@ -73,8 +73,8 @@ class OrderService extends OrderRepository{
         $input->phone       = $stdPhone;
         $input->full_name   = $fullName;
 
-        $user           = $this->userRepo->findByToken($rememberToken);
-        if(!$user OR $user->phone != $stdPhone){
+        $userFromToken           = $this->userRepo->findByToken($rememberToken);
+        if(!$userFromToken OR $userFromToken->phone != $stdPhone){
             $user               = $this->userRepo->createUpdate($input);
             if(is_null($user->activate_code_expired) || date("Y-m-d H:i:s") >= $user->activate_code_expired){
                 $user           = $this->userRepo->createPhoneValidation($user);
