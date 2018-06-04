@@ -68,11 +68,14 @@ class OrderService extends OrderRepository{
         return $this->find($orderId);
     }
 
-    public function needForValidateUserPhone($phone, $rememberToken){
-        $user           = $this->userRepo->findByPhone($phone);
-        $userByToken    = $this->userRepo->findByToken($rememberToken);
-        if(!$user OR is_null($user->activated) OR !$userByToken){
-            if(date("Y-m-d H:i:s") >= $user->activate_code_expired){
+    public function needForValidateUserPhone($fullName, $stdPhone){
+        $input  = new \stdClass();
+        $input->phone       = $stdPhone;
+        $input->full_name   = $fullName;
+
+        $user   = $this->userRepo->createUpdate($input);
+        if(is_null($user->activated)){
+            if(is_null($user->activate_code_expired) || date("Y-m-d H:i:s") >= $user->activate_code_expired){
                 $user           = $this->userRepo->createPhoneValidation($user);
             }
 
