@@ -84,7 +84,7 @@ class OrderRepository{
     }
 
     public function findOrderPromoByUserId($userId = null, $promo = '1000_per_kg'){
-        return Order::with([])->where('user_id', $userId)->where('promo', $promo)->first();
+        return Order::with([])->where('user_id', $userId)->where('package', $promo)->first();
     }
 
     public function getOldPackage($package = 6000){
