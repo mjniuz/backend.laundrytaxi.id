@@ -137,7 +137,7 @@ class OrderRepository{
             [
                 'id'    => 4,
                 'name'  => '1.000/kg 2 Hari',
-                'description'   => 'Promo pendaftaran pertama 1000/kg, gratis antar jemput, max 10kg, jika lebih dari 10kg, akan dikenakan 5000/kg setelahnya',
+                'description'   => 'Promo pendaftaran pertama Cuci Gosok 1000/kg, gratis antar jemput, max 10kg, jika lebih dari 10kg, akan dikenakan 5000/kg setelahnya',
                 'price_per_kg'  => 1000,
                 'min'   => 0,
                 'max'   => 10,
