@@ -65,7 +65,7 @@ class ZenzivaService{
     }
 
     public function courierPickedUp($user, $order){
-        $sms    = "Hi pelanggan LaundryTaxi " . $user->name . ", laundry no ". $order->invoice_no ." telah dipickup oleh kurir dengan berat " . $order->actual_weight . " dan jumal qty " . $order->actual_count . "pcs, total ". number_format($order->grand_total,0) ." akan segera diproses. CS: " . $this->cs;
+        $sms    = "Hi pelanggan LaundryTaxi " . $user->name . ", laundry no ". $order->invoice_no ." telah dipickup oleh kurir dengan berat " . $order->actual_weight . "kg dan jumal qty " . $order->actual_count . "pcs, total ". number_format($order->grand_total,0) ." akan segera diproses. CS: " . $this->cs;
         $this->send($sms, $user->phone);
     }
 }
