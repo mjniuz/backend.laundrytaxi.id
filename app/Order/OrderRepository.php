@@ -108,6 +108,10 @@ class OrderRepository{
         return Order::with([])->where('user_id', $userId)->where('package', $promo)->first();
     }
 
+    public function getOrderApprovedByUserId($userId = null){
+        return Order::with([])->where('user_id', $userId)->where('status','<>', 'rejected')->get();
+    }
+
     public function getOldPackage($package = 6000){
         if($package == 6000){
             return $this->_allPackage()[0];
@@ -165,6 +169,50 @@ class OrderRepository{
                 'after_max' => 5000,
                 'promo' => '1000_per_kg',
                 'key'   => '1000_per_kg'
+            ],
+            [
+                'id'    => 5,
+                'name'  => '2.000/kg 2 Hari',
+                'description'   => 'Promo pendaftaran trx ke 2 Cuci Gosok 2000/kg, gratis antar jemput, max 10kg, jika lebih dari 10kg, akan dikenakan 5000/kg setelahnya',
+                'price_per_kg'  => 2000,
+                'min'   => 0,
+                'max'   => 10,
+                'after_max' => 5000,
+                'promo' => '2000_per_kg',
+                'key'   => '2000_per_kg'
+            ],
+            [
+                'id'    => 6,
+                'name'  => '3.000/kg 2 Hari',
+                'description'   => 'Promo pendaftaran trx ke 3 Cuci Gosok 3000/kg, gratis antar jemput, max 10kg, jika lebih dari 10kg, akan dikenakan 5000/kg setelahnya',
+                'price_per_kg'  => 3000,
+                'min'   => 0,
+                'max'   => 10,
+                'after_max' => 5000,
+                'promo' => '3000_per_kg',
+                'key'   => '3000_per_kg'
+            ],
+            [
+                'id'    => 7,
+                'name'  => '4.000/kg 2 Hari',
+                'description'   => 'Promo pendaftaran trx ke 4 Cuci Gosok 4000/kg, gratis antar jemput, max 10kg, jika lebih dari 10kg, akan dikenakan 5000/kg setelahnya',
+                'price_per_kg'  => 4000,
+                'min'   => 0,
+                'max'   => 10,
+                'after_max' => 5000,
+                'promo' => '4000_per_kg',
+                'key'   => '4000_per_kg'
+            ],
+            [
+                'id'    => 8,
+                'name'  => '5.000/kg 2 Hari',
+                'description'   => 'Promo pelanggan setia Cuci Gosok 5000/kg, gratis antar jemput',
+                'price_per_kg'  => 5000,
+                'min'   => 0,
+                'max'   => 0,
+                'after_max' => 0,
+                'promo' => '5000_per_kg',
+                'key'   => '5000_per_kg'
             ]
         ];
     }

@@ -151,10 +151,11 @@ class OrderService extends OrderRepository{
 
         $user           = $this->userRepo->findByToken($token);
         if($user){
-            $hasUsedPromo   = $this->findOrderPromoByUserId($user->id, '1000_per_kg');
-            if($hasUsedPromo){
+            $hasOrder   = $this->getOrderApprovedByUserId($user->id);
+            $count      = $hasOrder->count();
+            if($count){
                 // default package
-                return $this->_defaultPackages();
+                return $this->_packagePromoTransaction($count);
             }
 
             return $this->_packageAddPromo();
@@ -235,5 +236,26 @@ class OrderService extends OrderRepository{
             $this->_allPackage()[1],
             $this->_allPackage()[2]
         ];
+    }
+
+    private function _packagePromoTransaction($hasOrderTimes = 1){
+        switch ($hasOrderTimes){
+            case 1:
+                return [
+                    $this->_allPackage()[4]
+                ];
+            case 2:
+                return [
+                    $this->_allPackage()[5]
+                ];
+            case 3:
+                return [
+                    $this->_allPackage()[6]
+                ];
+            default:
+                return [
+                    $this->_allPackage()[7]
+                ];
+        }
     }
 }
