@@ -163,6 +163,21 @@ class OrderService extends OrderRepository{
         return $this->_defaultPackages();
     }
 
+    public function rejectOrder($orderId = null){
+        $order  = $this->find($orderId);
+        if(!$order){
+            return false;
+        }
+
+        $order->status          = "rejected";
+        $order->success_comment = "tidak terjangkau lokasi";
+        $order->save();
+
+        $this->sms->rejectOrder($order->user, $order);
+
+        return $order;
+    }
+
     public function findAndValidatePackage($token = '', $packageId = null){
         if(!$token){
             // default package

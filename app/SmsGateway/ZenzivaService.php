@@ -36,18 +36,29 @@ class ZenzivaService{
 
     public function customerOrderSMS($user){
         $sms = "Hi pelanggan LaundryTaxi ". $user->name .", Pesanan laundry kamu akan segera dijemput oleh merchant kami pada jam kerja, harap pastikan nomor kamu aktif terus yaa!!";
-        $this->send($sms, $user->phone, $type = '');
+        $this->send($sms, $user->phone);
     }
 
     public function validationPhone($user){
         $sms = "Hi pelanggan LaundryTaxi ". $user->name .", verifikasi kode kamu adalah, " . $user->activate_code . ". Kode berlaku hingga " . $user->activate_code_expired;
-        $this->send($sms, $user->phone, $type = '');
+        $this->send($sms, $user->phone);
     }
 
     public function merchantOrderSMS($merchant, $user){
         $sms = "Hi merhcant LaundryTaxi, Ada pesanan laundry untuk kamu dari " . $user->name . ", ". $user->phone .", kamu bisa check di aplikasi kamu sekarang!!";
-        $this->send($sms, $merchant->phone, $type = '');
-        $this->send($sms, '081806423887', $type = '');
-        $this->send($sms, '081283257709', $type = '');
+        $this->send($sms, $merchant->phone);
+        $this->send($sms, '081806423887');
+        $this->send($sms, '081283257709');
+    }
+
+    public function updateOrderPickup($user, $order){
+        $sms    = "Hi pelanggan LaundryTaxi " . $user->name . ", laundry kamu dg no ". $order->invoice_no ." telah dipickup, total berat " . $order->actual_weight . "kg dan biaya Rp" .
+        number_format($order->grand_total,0) . " akan segera diproses.";
+        $this->send($sms, $user->phone);
+    }
+
+    public function rejectOrder($user, $order){
+        $sms    = "Hii pelanggan LaundryTaxi " . $user->name .", mohon maaf, pesanan kamu dg no ". $order->invoice_no ." tidak dapat kami teruskan karena lokasi belum kami jangkau. Kami akan terus memperbaiki layanan ke yg lebih baik lagi.";
+        $this->send($sms, $user->phone);
     }
 }

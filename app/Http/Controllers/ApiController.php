@@ -119,6 +119,19 @@ class ApiController extends Controller{
         ]);
     }
 
+    public function rejectOrder(Request $request){
+        $pass       = $request->get('password');
+        $orderId    = $request->get('order_id');
+        $order      = null;
+        if($pass == 22){
+            $order  = $this->order_service->rejectOrder($orderId);
+        }
+
+        return response()->json([
+            'status'    => $order
+        ]);
+    }
+
     public function checkForUpdate(Request $request){
         $version    = $request->get('version');
         $status     = false;
