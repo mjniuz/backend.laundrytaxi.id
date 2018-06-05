@@ -178,7 +178,7 @@ class OrderService extends OrderRepository{
         return $order;
     }
 
-    public function pickupSuccess($orderId, $count = 0, $weight = 0){
+    public function pickupSuccess($orderId, $weight = 0,$count = 0){
         $order  = $this->find($orderId);
         if(!$order){
             return false;
