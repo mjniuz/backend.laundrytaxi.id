@@ -178,6 +178,21 @@ class OrderService extends OrderRepository{
         return $order;
     }
 
+    public function pickupSuccess($orderId, $count = 0, $weight = 0){
+        $order  = $this->find($orderId);
+        if(!$order){
+            return false;
+        }
+
+        $result     = $this->updateActualOrder($order, $weight, $count);
+        if($result){
+            $this->sms->courierPickedUp($order->user, $result);
+        }
+
+        return $result;
+
+    }
+
     public function findAndValidatePackage($token = '', $packageId = null){
         if(!$token){
             // default package

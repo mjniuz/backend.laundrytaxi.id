@@ -41,6 +41,27 @@ class OrderRepository{
         return $order;
     }
 
+    public function updateActualOrder($order, $actualWeight = 10, $count = 0){
+        $package                = $this->_allPackage();
+        if(empty($package[($order->package_id - 1)])){
+            return false;
+        }
+
+        $package                = $package[($order->package_id - 1)];
+        $order->actual_weight   = $actualWeight;
+        $order->actual_count    = $count;
+        $totalCalculate         = $this->_calculateGrandTotal($order, $package);
+        $order->weight_price    = $totalCalculate['weight_price'];
+        $order->max_price       = $totalCalculate['max_price'];
+        $order->over_max        = $totalCalculate['over_max'];
+        $order->grand_total     = $totalCalculate['grand_total'];
+        $order->pickup_at       = date("Y-m-d H:i:s");
+
+        $order->save();
+
+        return $order;
+    }
+
     private function _generateInvoiceNo(){
         $lastOrder  = Order::with([])->orderBy('id','desc')->first();
 

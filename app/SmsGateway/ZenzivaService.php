@@ -3,7 +3,9 @@
 namespace App\SmsGateway;
 
 class ZenzivaService{
+    protected $cs;
     public function __construct() {
+        $this->cs   = "081283257709";
     }
 
     public function send($message, $phone, $type = ''){
@@ -59,6 +61,11 @@ class ZenzivaService{
 
     public function rejectOrder($user, $order){
         $sms    = "Hii pelanggan LaundryTaxi " . $user->name .", mohon maaf, pesanan kamu dg no ". $order->invoice_no ." tidak dapat kami teruskan karena lokasi belum kami jangkau. Kami akan terus memperbaiki layanan ke yg lebih baik lagi.";
+        $this->send($sms, $user->phone);
+    }
+
+    public function courierPickedUp($user, $order){
+        $sms    = "Hi pelanggan LaundryTaxi " . $user->name . ", laundry no ". $order->invoice_no ." telah dipickup oleh kurir dengan berat " . $order->actual_weight . " dan jumal qty " . $order->actual_count . "pcs, total ". number_format($order->grand_total,0) ." akan segera diproses. CS: " . $this->cs;
         $this->send($sms, $user->phone);
     }
 }
