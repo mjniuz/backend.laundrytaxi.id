@@ -5,7 +5,7 @@ namespace App\Http\Controllers\Backend\Auth;
 use Illuminate\Foundation\Auth\AuthenticatesUsers;
 use Illuminate\Routing\Controller;
 use Illuminate\Http\Request;
-use App\adminUsers\adminUserRepository;
+use App\AdminUsers\AdminUserRepository;
 use App\Notifications\MailResetPasswordToken;
 
 class LoginController extends Controller{
@@ -16,7 +16,7 @@ class LoginController extends Controller{
     protected $redirectTo = null;
 
 	protected $adminUser;
-	public function __construct(adminUserRepository $adminUser){
+	public function __construct(AdminUserRepository $adminUser){
 		$this->adminUser	= $adminUser;
 	}
 

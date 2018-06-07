@@ -6,14 +6,14 @@ use App\AdminUsers\ItemsHelper;
 use Illuminate\Routing\Controller;
 use Illuminate\Http\Request;
 
-use App\adminUsers\adminUserRepository;
+use App\AdminUsers\AdminUserRepository;
 
 
 
 class AdminUsersController extends Controller
 {
 	protected $admin_user;
-	public function __construct(adminUserRepository $admin_user){
+	public function __construct(AdminUserRepository $admin_user){
 		$this->admin_user   = $admin_user;
 	}
 
