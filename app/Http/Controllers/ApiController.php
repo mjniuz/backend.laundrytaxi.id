@@ -63,6 +63,8 @@ class ApiController extends Controller{
     public function validatePhone(Request $request){
         $phone      = $request->get('phone');
         $full_name  = $request->get('full_name');
+        $deviceHW  = $request->get('device_hardware');
+        $deviceId  = $request->get('device_id');
         $rememberToken  = $request->get('remember_token');
         $result         = $this->phone_validate->standardPhone($phone);
         $status          = true;
@@ -76,9 +78,10 @@ class ApiController extends Controller{
             $status      = false;
         }
 
-        $needActivation = false;
-        if($status == true){
-            $needActivation = $this->order_service->needForValidateUserPhone($full_name, $result, $rememberToken);
+        $needActivation = $this->order_service->needForValidateUserPhone($full_name, $result, $rememberToken, $deviceHW, $deviceId, $status);
+
+        if($status == true && $needActivation){
+            $needActivation = true;
         }
 
 

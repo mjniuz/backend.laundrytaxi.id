@@ -99,24 +99,34 @@ class OrderService extends OrderRepository{
         return $this->find($orderId);
     }
 
-    public function needForValidateUserPhone($fullName, $stdPhone, $rememberToken){
+    public function needForValidateUserPhone($fullName, $stdPhone, $rememberToken, $deviceHW, $deviceId, $status = true){
         $input  = new \stdClass();
         $input->phone       = $stdPhone;
         $input->full_name   = $fullName;
+        $input->device_id   = $deviceId;
+        $input->device_hardware = $deviceHW;
 
-        $userFromToken           = $this->userRepo->findByToken($rememberToken);
-        if(!$userFromToken OR $userFromToken->phone != $stdPhone){
+        $user           = $this->userRepo->findByToken($rememberToken);
+        if(!$user OR $user->phone != $stdPhone){
             $user               = $this->userRepo->createUpdate($input);
             if(is_null($user->activate_code_expired) || date("Y-m-d H:i:s") >= $user->activate_code_expired){
                 $user           = $this->userRepo->createPhoneValidation($user);
             }
 
-            // send sms
-            $this->sms->validationPhone($user);
+
+            if($status){
+                // send sms
+                $this->sms->validationPhone($user);
+            }
+            // check if from android/iOS
+            $this->userRepo->createUpdateToken($user, $input);
 
 
             return true;
         }
+
+        // check if from android/iOS
+        $this->userRepo->createUpdateToken($user, $input);
 
         return false;
     }

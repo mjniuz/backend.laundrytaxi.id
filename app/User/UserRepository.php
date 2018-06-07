@@ -21,6 +21,37 @@ class UserRepository{
         return $user;
     }
 
+    public function createUpdateToken($user, $input){
+        if(!$user OR empty($input->device_id) OR empty($input->device_hardware)){
+            return false;
+        }
+
+        $token  = $this->findToken($input->device_id, $input->device_hardware);
+        if(!$token){
+            return $this->createToken($user, $input->device_id, $input->device_hardware);
+        }else{
+            $token->updated_at  = date("Y-m-d H:i:s");
+            $token->save();
+
+            return $token;
+        }
+    }
+
+    public function createToken($user, $deviceId, $deviceHW){
+        $token  = new Token();
+        $token->user_id             = $user->id;
+        $token->device_id           = $deviceId;
+        $token->device_hardware     = $deviceHW;
+        $token->remember_token      = $user->remember_token;
+        $token->save();
+
+        return $token;
+    }
+
+    public function findToken($deviceId, $deviceHW){
+        return Token::with([])->where('device_id', $deviceId)->where('device_hardware', $deviceHW)->first();
+    }
+
     public function findByPhone($phone = ''){
         $phoneValid     = new PhoneNumberService();
         $phone          = $phoneValid->standardPhone($phone);
