@@ -1,0 +1,70 @@
+@import "_function";
+@import "_swatch";
+
+html, body{
+	height: 100%;
+	background: url("../img/cubes.png") $swatch2;
+}
+
+.login-box{
+	position: absolute;
+	width: 400px;
+	height: 270px;
+	margin: auto;
+	top: 0;
+	bottom: 0;
+	left: 0;
+	right: 0;
+	background: #fff;
+	@include set-border-radius(5px);
+	@include set-box-shadow(0px 1px 2px rgba(50, 50, 50, 0.38));
+	&.has-error{
+		height: 342px;
+	}
+	h1{
+		background: $swatch1;
+		color: #000;
+		font-size: 20px;
+		margin: 0;
+		text-align: center;
+		padding: 10px 15px;
+		@include set-border-radius(5px 5px 0 0);
+	}
+	h2{
+		background: $swatch3;
+		color: #000;
+		font-size: 18px;
+		margin: 0;
+		text-align: center;
+		padding: 5px 15px;
+	}
+	form{
+		padding: 10px 15px;
+		.form-group{
+			position: relative;
+			label{
+				color: $swatch2;
+				position: absolute;
+				left: 10px;
+				top: 13px;
+				font-size: 18px;
+				margin: 0;
+			}
+			input{
+				border: none;
+				border-bottom: solid 1px $swatch4;
+				font-size: 18px;
+				height: 48px;
+				line-height: 48px;
+				padding: 0;
+				padding-left: 38px;
+				@include set-box-shadow(none);
+				@include set-border-radius(0);
+				&:focus{
+					border-bottom: solid 1px $swatch3;
+					@include set-box-shadow(none);
+				}
+			}
+		}
+	}
+}

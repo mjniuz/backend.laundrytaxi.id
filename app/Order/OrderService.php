@@ -226,15 +226,15 @@ class OrderService extends OrderRepository{
 
     private function _packageAddPromo(){
         return [
-            $this->_allPackage()[3]
+            $this->_allPackage()[8],    // 1000 cuci lipat
+            $this->_allPackage()[7]     // 4000 cuci gosok
         ];
     }
 
     private function _defaultPackages(){
         return [
             $this->_allPackage()[0],
-            $this->_allPackage()[1],
-            $this->_allPackage()[2]
+            $this->_allPackage()[11]
         ];
     }
 
@@ -242,19 +242,27 @@ class OrderService extends OrderRepository{
         switch ($hasOrderTimes){
             case 1:
                 return [
-                    $this->_allPackage()[4]
+                    $this->_allPackage()[9],    // 2000 cuci lipat
+                    $this->_allPackage()[10],   // 5000 cuci gosok
+                    $this->_allPackage()[11]    // 7000 cuci kucek
                 ];
             case 2:
                 return [
-                    $this->_allPackage()[5]
+                    $this->_allPackage()[5],    // 3000 cuci lipat
+                    $this->_allPackage()[10],   // 5000 cuci gosok
+                    $this->_allPackage()[11]    // 7000 cuci kucek
                 ];
             case 3:
                 return [
-                    $this->_allPackage()[6]
+                    $this->_allPackage()[5],    // 3000 cuci lipat
+                    $this->_allPackage()[10],   // 5000 cuci gosok
+                    $this->_allPackage()[11]    // 7000 cuci kucek
                 ];
             default:
                 return [
-                    $this->_allPackage()[7]
+                    $this->_allPackage()[5],    // 3000 cuci lipat
+                    $this->_allPackage()[10],   // 5000 cuci gosok
+                    $this->_allPackage()[11]    // 7000 cuci kucek
                 ];
         }
     }
