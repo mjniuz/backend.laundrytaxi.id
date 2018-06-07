@@ -92,7 +92,7 @@
                                             <td>{{ ($order->actual_weight > 0) ? number_format($order->actual_weight,0) : number_format($order->estimate_weight,0) }}</td>
                                             <td>{{ ucfirst($order->package) }}</td>
                                             <td>{{ number_format($order->grand_total, 0) }}</td>
-                                            <td>{{ $order->status }} / {!! $order->status_text !!}</td>
+                                            <td>{!! $order->status_text !!}</td>
                                             <td>{{ $order->updated_at }}</td>
                                             <td>
                                                 <a href="{{ url('backend/order/detail/' . $order->id) }}" class="btn btn-xs btn-primary">
