@@ -21,19 +21,19 @@ class Order extends Model{
     }
 
     public function getStatusTextAttribute(){
-        if(!is_null($this->pickup_at)){
-            return '<span class="label label-primary">pickup</span>';
-        }
-        if(!is_null($this->process_at)){
-            return '<span class="label label-info">on process</span>';
+        if($this->status == 'rejected'){
+            return '<span class="label label-danger">reject</span>';
         }
         if(!is_null($this->delivered_at)){
             return '<span class="label label-success">delivered</span>';
         }
-
-        if($this->status == 'rejected'){
-            return '<span class="label label-danger">reject</span>';
+        if(!is_null($this->process_at)){
+            return '<span class="label label-info">on process</span>';
         }
+        if(!is_null($this->pickup_at)){
+            return '<span class="label label-primary">pickup</span>';
+        }
+
 
         return '<span class="label label-warning">approved</span>';
     }
