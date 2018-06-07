@@ -66,11 +66,23 @@ class ApiController extends Controller{
         $rememberToken  = $request->get('remember_token');
         $result         = $this->phone_validate->standardPhone($phone);
         $needActivation = $this->order_service->needForValidateUserPhone($full_name, $result, $rememberToken);
+        $status          = true;
+        $resultMsg      = '';
+        if(!$result){
+            $status     = false;
+            $resultMsg  = 'No hp tidak valid';
+        }
+        if(date("Y-m-d H:i:s") < "2018-06-25 00:00:00" && !$resultMsg){
+            $resultMsg     =  "Libur lebaran sd 25 juni 2018, Mohon maaf lahir dan batin.";
+            $status      = false;
+        }
+
 
         return response()->json([
-            'status'    => (bool)$result,
+            'status'    => (bool)$status,
             'data'      => $result,
-            'activation' => $needActivation
+            'activation' => $needActivation,
+            'message'   => $resultMsg
         ]);
     }
 
