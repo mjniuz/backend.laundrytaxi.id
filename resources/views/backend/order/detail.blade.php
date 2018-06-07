@@ -92,6 +92,8 @@
                                     <td valign="top">
                                         @if($order->status == 'rejected')
                                             <span class="label label-danger">{{ $order->status }}</span>
+                                            <br/>
+                                            {{ $order->success_comment }}
                                         @endif
                                         @if($order->status == 'approved')
                                             <span class="label label-success">{{ $order->status }}</span>
