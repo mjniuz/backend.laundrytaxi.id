@@ -60,7 +60,7 @@ class ZenzivaService{
     }
 
     public function rejectOrder($user, $order){
-        $sms    = "Hii pelanggan LaundryTaxi " . $user->name .", mohon maaf, pesanan kamu dg no ". $order->invoice_no ." tidak dapat kami teruskan karena lokasi belum kami jangkau. Kami akan terus memperbaiki layanan ke yg lebih baik lagi.";
+        $sms    = "Hii pelanggan LaundryTaxi " . $user->name .", mohon maaf, pesanan kamu dg no ". $order->invoice_no ." tdk dpt kami teruskan krn ". $order->success_comment .". Kami akn terus memperbaiki layanan.";
         $this->send($sms, $user->phone);
     }
 
