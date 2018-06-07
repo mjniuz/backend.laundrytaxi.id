@@ -31,6 +31,10 @@ class Order extends Model{
             return '<span class="label label-success">delivered</span>';
         }
 
+        if($this->status == 'rejected'){
+            return '<span class="label label-danger">reject</span>';
+        }
+
         return '<span class="label label-warning">approved</span>';
     }
 }
