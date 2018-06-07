@@ -65,7 +65,6 @@ class ApiController extends Controller{
         $full_name  = $request->get('full_name');
         $rememberToken  = $request->get('remember_token');
         $result         = $this->phone_validate->standardPhone($phone);
-        $needActivation = $this->order_service->needForValidateUserPhone($full_name, $result, $rememberToken);
         $status          = true;
         $resultMsg      = '';
         if(!$result){
@@ -75,6 +74,11 @@ class ApiController extends Controller{
         if(date("Y-m-d H:i:s") < "2018-06-25 00:00:00" && !$resultMsg){
             $resultMsg     =  "Libur lebaran sd 25 juni 2018, Mohon maaf lahir dan batin.";
             $status      = false;
+        }
+
+        $needActivation = false;
+        if($status == true){
+            $needActivation = $this->order_service->needForValidateUserPhone($full_name, $result, $rememberToken);
         }
 
 
