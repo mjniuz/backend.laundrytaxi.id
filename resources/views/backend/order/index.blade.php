@@ -89,7 +89,7 @@
                                         <tr>
                                             <td>{{ $order->invoice_no }}</td>
                                             <td title="{{ $order->user->phone }}">{{ $order->full_name }} {{ $order->user->phone }}</td>
-                                            <td>{{ number_format($order->estimate_weight,0) }}</td>
+                                            <td>{{ ($order->actual_weight > 0) ? number_format($order->actual_weight,0) : number_format($order->estimate_weight,0) }}</td>
                                             <td>{{ ucfirst($order->package) }}</td>
                                             <td>{{ number_format($order->grand_total, 0) }}</td>
                                             <td>{{ $order->status }} / {!! $order->status_text !!}</td>
