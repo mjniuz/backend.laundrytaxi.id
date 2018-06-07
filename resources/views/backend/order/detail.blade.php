@@ -14,7 +14,7 @@
                             <h4>Order Detail</h4>
                             <div class="pull-right">
                                     @if($order->status == 'approved')
-                                        <a href="{{ url('backend/order/approval/' . $order->id) }}" class="btn btn-sm btn-danger">
+                                        <a href="{{ url('backend/order/reject/' . $order->id) }}" class="btn btn-sm btn-danger">
                                             <i class="fa fa-close"></i> Reject Form
                                         </a>
                                     @endif
