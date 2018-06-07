@@ -68,4 +68,14 @@ class ZenzivaService{
         $sms    = "Hi pelanggan LaundryTaxi " . $user->name . ", laundry no ". $order->invoice_no ." telah dipickup oleh kurir dengan berat " . $order->actual_weight . "kg dan jumal qty " . $order->actual_count . "pcs, total ". number_format($order->grand_total,0) ." akan segera diproses. CS: " . $this->cs;
         $this->send($sms, $user->phone);
     }
+
+    public function onProcess($user, $order, $deliveryDate = ''){
+        $sms    = "Hi pelanggan LaundryTaxi " . $user->name . ", laundry no ". $order->invoice_no ." telah/sedang diproses dan akan diantarkan pada tanggal ". $deliveryDate .", total ". number_format($order->grand_total,0) ." . CS: " . $this->cs;
+        $this->send($sms, $user->phone);
+    }
+
+    public function delivered($user, $order){
+        $sms    = "Hi pelanggan LaundryTaxi " . $user->name . ", laundry no ". $order->invoice_no ." telah dikirim, jika ada masalah dengan laundry kamu, bisa hubungi CS no: " . $this->cs . ", Terimakasih silahkan order kembali!!";
+        $this->send($sms, $user->phone);
+    }
 }

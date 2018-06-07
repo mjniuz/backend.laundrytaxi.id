@@ -160,6 +160,20 @@ class ApiController extends Controller{
         ]);
     }
 
+    public function findUser(Request $request){
+        $q      = $request->get('q');
+        $users  = $this->user->getUserAjax($q);
+
+        return response()->json($users);
+    }
+
+    public function getLastOrder(Request $request){
+        $userId = $request->get('user_id');
+        $order  = $this->order_service->findLastOrderByUserId($userId);
+
+        return response()->json($order);
+    }
+
     public function test(){
         dd(date("Y-m-d H:i:s"));
     }

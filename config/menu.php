@@ -9,6 +9,44 @@ $menu   = [
         "sub"   => [
         ]
     ],[
+        "title" => "Order",
+        "link"  => "#",
+        "icon"  => "vcard-o",
+        "as"    => "order.",
+        "sub"   => [
+            [
+                "title" => "List All",
+                "link"  => "order",
+                "icon"  => "circle-o",
+                "as"    => "",
+            ],
+            [
+                "title" => "Create",
+                "link"  => "order/create",
+                "icon"  => "pencil",
+                "as"    => "",
+            ]
+        ]
+    ],[
+        "title" => "User",
+        "link"  => "#",
+        "icon"  => "users",
+        "as"    => "user.",
+        "sub"   => [
+            [
+                "title" => "List All",
+                "link"  => "user",
+                "icon"  => "circle-o",
+                "as"    => "",
+            ],
+            [
+                "title" => "Create",
+                "link"  => "user/create",
+                "icon"  => "pencil",
+                "as"    => "",
+            ]
+        ]
+    ],[
         "title" => "Administrator",
         "link"  => "#",
         "icon"  => "vcard-o",
@@ -39,7 +77,7 @@ $menu   = [
                 "as"    => "group.",
             ]
         ]
-    ],
+    ]
 ];
 
 return $menu;

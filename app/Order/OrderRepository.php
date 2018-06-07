@@ -2,6 +2,9 @@
 
 namespace App\Order;
 
+use App\User\PhoneNumberService;
+use function foo\func;
+
 class OrderRepository{
     public function find($id = null){
         return Order::with(['user','merchant'])->find($id);
@@ -11,12 +14,107 @@ class OrderRepository{
         return Order::with(['user','merchant'])->where('user_id', $userId)->orderBy('id','desc')->get();
     }
 
+    public function get($filters = []){
+        $orders     = Order::with(['user']);
+        if(!empty($filters['invoice_no'])){
+            $orders->where('invoice_no', 'like', $filters['invoice_no']);
+        }
+
+        if(!empty($filters['name'])){
+            $name   = $filters['name'];
+            $orders->where(function($q) use($name){
+                $q->where('full_name', 'like', $name)
+                    ->orWhereHas('user', function ($qUser) use($name){
+                        $qUser->where('name','like',$name);
+                    });
+            });
+        }
+
+
+        if(!empty($filters['phone'])){
+            $phoneValid     = new PhoneNumberService();
+
+            $phone  = $phoneValid->standardPhone($filters['phone']);
+            $orders->where('phone','like', $phone);
+        }
+
+        if(!empty($filters['address'])){
+            $address   = $filters['address'];
+            $orders->where(function($q) use($address){
+                $q->where('full_address', 'like', $address)
+                    ->orWhere('address_note', $address);
+            });
+        }
+
+        if(!empty($filters['status'])){
+            $orders->where('status', 'like', $filters['status']);
+        }
+
+        if(!empty($filters['process'])){
+            $process    = $filters['process'];
+            switch ($process){
+                case 'pickup_at':
+                    $orders->whereNotNull('pickup_at');
+                    break;
+                case 'process_at':
+                    $orders->whereNotNull('process_at');
+                    break;
+                case 'delivered_at':
+                    $orders->whereNotNull('delivered_at');
+                    break;
+                default:
+                    break;
+            }
+        }
+
+        return $orders->orderBy('id','desc')->paginate(25);
+    }
+
+    public function updateStatus($id,$inputs){
+        $status     = is_array($inputs) ? $inputs['status'] : $inputs->status;
+        $order      = $this->find($id);
+
+        if(!$order || empty($inputs)){
+            return false;
+        }
+
+        if($status == 'pickup_at' && is_null($order->pickup_at)){
+            $order->pickup_at = date("Y-m-d H:i:s");
+            // update here
+            $weight = is_array($inputs) ? $inputs['actual_weight'] : $inputs->actual_weight;
+            $count  = is_array($inputs) ? $inputs['actual_count'] : $inputs->actual_count;
+            $this->updateActualOrder($order, $weight, $count);
+        }
+
+        if($status == 'process_at' && is_null($order->process_at) && !is_null($order->pickup_at)){
+            $order->process_at  = date("Y-m-d H:i:s");
+        }
+
+        if($status == 'delivered_at' && is_null($order->delivered_at) && !is_null($order->process_at)){
+            $order->delivered_at = date("Y-m-d H:i:s");
+        }
+
+        $order->save();
+
+        return [
+            'status'    => $status,
+            'order'     => $order
+        ];
+    }
+
     public function create($user, $merchant, $data, $package){
         $order  = new Order();
         $order->invoice_no  = $this->_generateInvoiceNo();
         $order->user_id     = $user->id;
         $order->merchant_id = $merchant->id;
-        $order->estimate_weight = $data->estimate;
+        $order->estimate_weight = !empty($data->estimate) ? $data->estimate : $data->actual_weight;
+        if(!empty($data->actual_weight)){
+            $order->actual_weight   = $data->actual_weight;
+            $order->pickup_at       = date("Y-m-d H:i:s");
+        }
+        if(!empty($data->actual_count)){
+            $order->actual_count    = $data->actual_count;
+        }
         $order->package_id      = $data->package_id;
         $order->lat         = $data->lat;
         $order->lng         = $data->lng;
@@ -122,6 +220,37 @@ class OrderRepository{
 
         // 8000
         return $this->_allPackage()[2];
+    }
+
+    public function generateOrderDetail($order, $package) {
+        $weight     = !empty($order->actual_weight) ? $order->actual_weight : $order->estimate_weight;
+        $grand      = $this->_calculateGrandTotal($order, $package);
+        $results    = [];
+
+        $results[]     = [
+            'title'     => "Paket ". $package['name'] ." @" . number_format($order->actual_weight,0) . "Kg" . (($package['max'] > 0) ? ", max " . $package['max'] . "kg" : ""),
+            'price_text'=> number_format($grand['weight_price']),
+            'price'     => $grand['weight_price']
+        ];
+        if($grand['over_max']){
+            $results[]    = [
+                'title'     => 'Biaya lebih ' . ($weight - $package['max']) . 'kg @' . $package['after_max'] . '/kg',
+                'price_text'=> number_format($grand['max_price'],0),
+                'price'     => $grand['max_price']
+            ];
+        }
+
+        $results[] = [
+            'title'     => "Biaya Pickup (PROMO)",
+            'price_text'=> 0,
+            'price'     => 0
+        ];
+
+        return $results;
+    }
+
+    public function findLastOrderByUserId($userId){
+        return Order::with(['user'])->where('user_id', $userId)->orderBy('id','desc')->first();
     }
 
     public function _allPackage(){

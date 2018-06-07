@@ -29,4 +29,6 @@ Route::post('/validate-package', 'ApiController@findValidatePackage');
 Route::any('/check-for-update', 'ApiController@checkForUpdate');
 Route::any('/reject-order', 'ApiController@rejectOrder');
 Route::any('/pickup-order', 'ApiController@courierPickedUp');
+Route::get('/find-user', 'ApiController@findUser');
+Route::get('/get-last-order', 'ApiController@getLastOrder');
 Route::any('/test', 'ApiController@test');

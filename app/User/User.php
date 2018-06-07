@@ -26,4 +26,8 @@ class User extends Authenticatable
     protected $hidden = [
         'password',
     ];
+
+    public function orders(){
+        return $this->hasMany('App\Order\Order', 'user_id')->orderBy('id','desc');
+    }
 }

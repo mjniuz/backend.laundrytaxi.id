@@ -55,6 +55,33 @@ class UserRepository{
         $user->save();
 
         return $user;
+    }
 
+    public function get($filters = []){
+        $users  = User::with([]);
+
+        if(!empty($filters['name'])){
+            $users->where('name','like', $filters['name']);
+        }
+
+        if(!empty($filters['phone'])){
+            $phoneValid     = new PhoneNumberService();
+
+            $phone  = $phoneValid->standardPhone($filters['phone']);
+            $users->where('phone','like', $phone);
+        }
+
+        return $users->paginate(25);
+    }
+
+    public function getUserAjax($query){
+        return User::with([])->where(function ($q)use($query){
+            $q->where('name', 'like', '%'. $query .'%')
+                ->orWhere('phone','like','%'. $query .'%');
+        })->get();
+    }
+
+    public function find($id){
+        return User::with(['orders.merchant'])->find($id);
     }
 }

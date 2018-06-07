@@ -1,6 +1,6 @@
 @extends('backend')
 @section('page_header')
-    <h4>.NET Admin User</h4>
+    <h4>Admin User</h4>
     <div class="pull-right">
         <a href="{{ url('backend/administrator/create') }}" class="btn btn-sm btn-success">
             <i class="fa fa-pencil"></i> Create

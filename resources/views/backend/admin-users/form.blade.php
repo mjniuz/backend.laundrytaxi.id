@@ -27,6 +27,7 @@
                         backend User Form
                     </h3>
                 </div>
+                
                 @if(isset($myProfile))
                     {{ Form::open(['url' => url('backend/profile-update'), 'autocomplete' => 'off', 'files' => true ]) }}
                 @elseif(isset($user))

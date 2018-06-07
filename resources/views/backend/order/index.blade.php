@@ -14,48 +14,44 @@
                             </div>
                         </div>
                         <div class="box-body">
-                            {{ Form::open(['url' => url('backend/yiwugo/order'), 'method' => 'get']) }}
+                            {{ Form::open(['url' => url('backend/order'), 'method' => 'get']) }}
                             <div class="row gutter-10">
                                 <div class="col-md-2">
                                     <div class="input-group">
-                                        <span class="input-group-addon">Title</span>
-                                        <input type="text" class="form-control" value="{{ isset($filters['title']) ? $filters['title'] : "" }}" name="title"/>
+                                        <span class="input-group-addon">Invoice</span>
+                                        <input type="text" class="form-control" value="{{ isset($filters['invoice_no']) ? $filters['invoice_no'] : "" }}" name="invoice_no"/>
                                     </div>
                                 </div>
                                 <div class="col-md-2">
                                     <div class="input-group">
-                                        <span class="input-group-addon">Order ID</span>
-                                        <input type="text" class="form-control" value="{{ isset($filters['order_id']) ? $filters['order_id'] : "" }}" name="order_id"/>
-                                    </div>
-                                </div>
-                                <div class="col-md-2">
-                                    <div class="input-group">
-                                        <span class="input-group-addon">User Name</span>
+                                        <span class="input-group-addon">Name</span>
                                         <input type="text" class="form-control" value="{{ isset($filters['name']) ? $filters['name'] : "" }}" name="name"/>
                                     </div>
                                 </div>
                                 <div class="col-md-2">
                                     <div class="input-group">
+                                        <span class="input-group-addon">Phone</span>
+                                        <input type="text" class="form-control" value="{{ isset($filters['phone']) ? $filters['phone'] : "" }}" name="phone"/>
+                                    </div>
+                                </div>
+                                <div class="col-md-2">
+                                    <div class="input-group">
                                         <span class="input-group-addon">Status</span>
-                                        <select class="form-control" name="order_status">
-                                            <option value="" {{ (isset($filters['order_status']) AND $filters['order_status'] == '') ? 'selected' : '' }}>All</option>
-                                            <option value="PENDING" {{ (isset($filters['order_status']) AND $filters['order_status'] == 'PENDING') ? 'selected' : '' }}>PENDING</option>
-                                            <option value="PRICE_LIST" {{ (isset($filters['order_status']) AND $filters['order_status'] == 'PRICE_LIST') ? 'selected' : '' }}>PRICE LIST</option>
-                                            <option value="ON_PROGRESS" {{ (isset($filters['order_status']) AND $filters['order_status'] == 'ON_PROGRESS') ? 'selected' : '' }}>ON PROGRESS</option>
-                                            <option value="HOLD" {{ (isset($filters['order_status']) AND $filters['order_status'] == 'HOLD') ? 'selected' : '' }}>HOLD</option>
-                                            <option value="SUCCESS" {{ (isset($filters['order_status']) AND $filters['order_status'] == 'SUCCESS') ? 'selected' : '' }}>SUCCESS</option>
-                                            <option value="EXPIRED" {{ (isset($filters['order_status']) AND $filters['order_status'] == 'EXPIRED') ? 'selected' : '' }}>EXPIRED</option>
+                                        <select class="form-control" name="status">
+                                            <option value="" {{ (isset($filters['status']) AND $filters['status'] == '') ? 'selected' : '' }}>All</option>
+                                            <option value="rejected" {{ (isset($filters['status']) AND $filters['status'] == 'rejected') ? 'selected' : '' }}>Rejected</option>
+                                            <option value="approved" {{ (isset($filters['status']) AND $filters['status'] == 'approved') ? 'selected' : '' }}>Approved</option>
                                         </select>
                                     </div>
                                 </div>
                                 <div class="col-md-2">
                                     <div class="input-group">
-                                        <span class="input-group-addon">Payment</span>
-                                        <select class="form-control" name="payment_status">
-                                            <option value="" {{ (isset($filters['payment_status']) AND $filters['payment_status'] == '') ? 'selected' : '' }}>All</option>
-                                            <option value="PAID" {{ (isset($filters['payment_status']) AND $filters['payment_status'] == 'pending') ? 'selected' : '' }}>Paid</option>
-                                            <option value="UNPAID" {{ (isset($filters['payment_status']) AND $filters['payment_status'] == 'reject') ? 'selected' : '' }}>Unpaid</option>
-                                            <option value="EXPIRED" {{ (isset($filters['payment_status']) AND $filters['payment_status'] == 'ready') ? 'selected' : '' }}>Expired</option>
+                                        <span class="input-group-addon">Process On</span>
+                                        <select class="form-control" name="process">
+                                            <option value="" {{ (isset($filters['process']) AND $filters['process'] == '') ? 'selected' : '' }}>All</option>
+                                            <option value="pickup_at" {{ (isset($filters['process']) AND $filters['process'] == 'pickup_at') ? 'selected' : '' }}>Picked up</option>
+                                            <option value="process_at" {{ (isset($filters['pickup_at']) AND $filters['pickup_at'] == 'process_at') ? 'selected' : '' }}>Process</option>
+                                            <option value="delivered_at" {{ (isset($filters['pickup_at']) AND $filters['pickup_at'] == 'delivered_at') ? 'selected' : '' }}>Delivered</option>
                                         </select>
                                     </div>
                                 </div>
@@ -78,28 +74,28 @@
                             <table class="table table-bordered table-hover">
                                 <thead>
                                     <tr>
-                                        <th>ID</th>
+                                        <th>Invoice</th>
                                         <th>Name</th>
-                                        <th>Invoice ID</th>
-                                        <th>Status</th>
+                                        <th>Weight</th>
+                                        <th>Package</th>
                                         <th>Total</th>
                                         <th>Status</th>
-                                        <th>Approved At</th>
+                                        <th>Last Update</th>
                                         <th>#</th>
                                     </tr>
                                 </thead>
                                 <tbody>
                                     @foreach ($orders as $order)
                                         <tr>
-                                            <td>{{ $order->id }}</td>
-                                            <td title="{{ $order->user->marking_code }}">{{ $order->user->name }}</td>
                                             <td>{{ $order->invoice_no }}</td>
-                                            <td>{{ ucfirst($order->order_status) }}</td>
-                                            <td>{{ number_format($order->total_price, 0) }}</td>
-                                            <td>{{ $order->payment_status }}</td>
-                                            <td>{{ $order->approved_at }}</td>
+                                            <td title="{{ $order->user->phone }}">{{ $order->full_name }} {{ $order->user->phone }}</td>
+                                            <td>{{ number_format($order->estimate_weight,0) }}</td>
+                                            <td>{{ ucfirst($order->package) }}</td>
+                                            <td>{{ number_format($order->grand_total, 0) }}</td>
+                                            <td>{{ $order->status }} / {!! $order->status_text !!}</td>
+                                            <td>{{ $order->updated_at }}</td>
                                             <td>
-                                                <a href="{{ url('backend/yiwugo/order-detail/' . $order->id) }}" class="btn btn-xs btn-primary">
+                                                <a href="{{ url('backend/order/detail/' . $order->id) }}" class="btn btn-xs btn-primary">
                                                     <i class="fa fa-search"></i> Detail
                                                 </a>
                                             </td>

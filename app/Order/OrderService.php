@@ -13,6 +13,30 @@ class OrderService extends OrderRepository{
         $this->sms      = $sms;
     }
 
+    public function updateStatusOrder($id, $inputs){
+        $result     = $this->updateStatus($id, $inputs);
+        if(!$result){
+            return false;
+        }
+
+        $user   = $result['order']->user;
+        $order  = $result['order'];
+        switch ($result['status']){
+            case 'pickup_at':
+                $this->sms->courierPickedUp($user, $order);
+                return true;
+            case 'process_at':
+                $delivery   = !empty($inputs['delivery_date']) ? $inputs['delivery_date'] : ' sesuai estimasi order ';
+                $this->sms->onProcess($user, $order, $delivery);
+                return true;
+            case 'delivered_at':
+                $this->sms->delivered($user, $order);
+                return true;
+        }
+
+        return false;
+    }
+
     public function makeOrder($input){
         // find or create user
         $token          = !empty($input->remember_token) ? $input->remember_token : null;
@@ -42,8 +66,15 @@ class OrderService extends OrderRepository{
         if($order){
             // send sms
             $sms    = new ZenzivaService();
-            $sms->customerOrderSMS($user);
-            $sms->merchantOrderSMS($merchant, $user);
+            if($order->actual_weight > 0){
+                // create by admin
+                $input->status  = 'pickup_at';
+                $this->updateStatus($order->id, $input);
+                $sms->updateOrderPickup($user, $order);
+            }else{
+                $sms->customerOrderSMS($user);
+                $sms->merchantOrderSMS($merchant, $user);
+            }
             return $this->find($order->id);
         }
 
@@ -164,14 +195,14 @@ class OrderService extends OrderRepository{
         return $this->_defaultPackages();
     }
 
-    public function rejectOrder($orderId = null){
+    public function rejectOrder($orderId = null, $reason = ''){
         $order  = $this->find($orderId);
         if(!$order){
             return false;
         }
 
         $order->status          = "rejected";
-        $order->success_comment = "tidak terjangkau lokasi";
+        $order->success_comment = $reason ? $reason : "tidak terjangkau lokasi";
         $order->save();
 
         $this->sms->rejectOrder($order->user, $order);
