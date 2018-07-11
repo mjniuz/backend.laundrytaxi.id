@@ -29,7 +29,7 @@
                                 <tbody>
                                 <tr>
                                     <td><strong>Invoice</strong></td>
-                                    <td valign="top">{{ $order->invoice_no }}</td>
+                                    <td valign="top">{{ $order->invoice_no }} - {{ $order->user->name }} / {{ $order->user->phone }}</td>
                                 </tr>
                                 <tr>
                                     <td valign="top"><strong>Message</strong></td>
@@ -43,6 +43,42 @@
                         </div>
                     </div>
                     <div class="col-lg-6">
+                        <table class="table table-bordered table-hover table-striped">
+                            <thead>
+                            <tr>
+                                <td>
+                                    ID
+                                </td>
+                                <td>
+                                    Admin ID
+                                </td>
+                                <td>
+                                    Message
+                                </td>
+                                <td>
+                                    Created
+                                </td>
+                            </tr>
+                            </thead>
+                            <tbody>
+                            @foreach($sms as $sm)
+                                <tr>
+                                    <td>
+                                        {{ $sm->id }}
+                                    </td>
+                                    <td>
+                                        {{ $sm->admin_user_id }}
+                                    </td>
+                                    <td>
+                                        {{ $sm->message }}
+                                    </td>
+                                    <td>
+                                        {{ $sm->created_at }}
+                                    </td>
+                                </tr>
+                            @endforeach
+                            </tbody>
+                        </table>
                     </div>
                 </div>
                 {{ Form::close() }}

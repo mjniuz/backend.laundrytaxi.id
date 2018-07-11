@@ -3,11 +3,15 @@
 namespace App\Order;
 
 use App\User\PhoneNumberService;
-use function foo\func;
+use Sentinel;
 
 class OrderRepository{
     public function find($id = null){
         return Order::with(['user','merchant'])->find($id);
+    }
+
+    public function getSms($id){
+        return OrderCustomSms::with([])->where('order_id', $id)->orderBy('id','desc')->get();
     }
 
     public function listOrderByUserId($userId = null){
@@ -388,5 +392,16 @@ class OrderRepository{
                 'key'   => '7000_per_kg_cuci_gosok_kucek'
             ],
         ];
+    }
+
+    public function createCustomSms($orderId,$message,$phone){
+        $sms    = new OrderCustomSms();
+        $sms->order_id  = $orderId;
+        $sms->admin_user_id = Sentinel::check()->id;
+        $sms->message       = $message;
+        $sms->destination_number       = $phone;
+        $sms->save();
+
+        return $sms;
     }
 }

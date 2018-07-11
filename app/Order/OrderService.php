@@ -226,6 +226,8 @@ class OrderService extends OrderRepository{
             return false;
         }
 
+        $this->createCustomSms($orderId,$message,$order->user->phone);
+
         $this->sms->customSms($order->user, $message);
 
         return $order;

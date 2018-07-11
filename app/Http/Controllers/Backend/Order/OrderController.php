@@ -80,8 +80,9 @@ class OrderController extends Controller
 
     public function customSmsForm($id = null, Request $request){
         $order  = $this->order->find($id);
+        $sms    = $this->order->getSms($id);
 
-        return view('backend.order.sms-custom', compact('order'));
+        return view('backend.order.sms-custom', compact('order','sms'));
     }
 
     public function customSmsSave($id = null, Request $request){
