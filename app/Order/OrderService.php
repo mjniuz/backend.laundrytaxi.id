@@ -314,9 +314,9 @@ class OrderService extends OrderRepository{
                 ];
             default:
                 return [
-                    $this->_allPackage()[5],    // 3000 cuci lipat
-                    $this->_allPackage()[10],   // 5000 cuci gosok
-                    $this->_allPackage()[11]    // 7000 cuci kucek
+                    $this->_allPackage()[6],    // 4000 cuci lipat
+                    $this->_allPackage()[0],    // 6000 cuci gosok
+                    $this->_allPackage()[12]    // 10000 cuci kucek
                 ];
         }
     }

@@ -391,6 +391,17 @@ class OrderRepository{
                 'promo' => '7000_per_kg_cuci_gosok_kucek',
                 'key'   => '7000_per_kg_cuci_gosok_kucek'
             ],
+            [
+                'id'    => 13,
+                'name'  => 'Cuci Kucek 10.000/kg 2 Hari',
+                'description'   => 'Promo Cuci KUCEK & Gosok 10.000/kg (Lebih bersih di sela-sela baju), gratis antar jemput. Dikerjakan oleh tenaga cuci profesional dengan tangan, tanpa mesin',
+                'price_per_kg'  => 10.000,
+                'min'   => 0,
+                'max'   => 0,
+                'after_max' => 0,
+                'promo' => '10000_per_kg_cuci_gosok_kucek',
+                'key'   => '10000_per_kg_cuci_gosok_kucek'
+            ],
         ];
     }
 
