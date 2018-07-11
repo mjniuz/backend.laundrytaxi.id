@@ -5,7 +5,7 @@ namespace App\SmsGateway;
 class ZenzivaService{
     protected $cs;
     public function __construct() {
-        $this->cs   = "081283257709";
+        $this->cs   = "083806439028";
     }
 
     public function send($message, $phone, $type = ''){
@@ -48,9 +48,9 @@ class ZenzivaService{
 
     public function merchantOrderSMS($merchant, $user){
         $sms = "Hi merhcant LaundryTaxi, Ada pesanan laundry untuk kamu dari " . $user->name . ", ". $user->phone .", kamu bisa check di aplikasi kamu sekarang!!";
-        $this->send($sms, $merchant->phone);
-        $this->send($sms, '081398080314'); // rinda
-        $this->send($sms, '081283257709'); // bu eta
+        //$this->send($sms, $merchant->phone);
+        $this->send($sms, '081806423887'); // rinda
+        $this->send($sms, '083806439028'); // bu eta
     }
 
     public function updateOrderPickup($user, $order){
