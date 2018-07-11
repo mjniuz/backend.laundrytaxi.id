@@ -297,7 +297,7 @@ class OrderService extends OrderRepository{
             case 1:
                 return [
                     $this->_allPackage()[9],    // 2000 cuci lipat
-                    $this->_allPackage()[10],   // 5000 cuci gosok
+                    $this->_allPackage()[7],    // 4000 cuci gosok
                     $this->_allPackage()[11]    // 7000 cuci kucek
                 ];
             case 2:
