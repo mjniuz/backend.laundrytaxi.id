@@ -102,7 +102,7 @@ class UserRepository{
             $users->where('phone','like', $phone);
         }
 
-        return $users->paginate(25);
+        return $users->orderBy('id','desc')->paginate(25);
     }
 
     public function getUserAjax($query){
