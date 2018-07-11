@@ -77,4 +77,19 @@ class OrderController extends Controller
 
         return redirect(url('backend/order/detail/' . $order->id));
     }
+
+    public function customSmsForm($id = null, Request $request){
+        $order  = $this->order->find($id);
+
+        return view('backend.order.sms-custom', compact('order'));
+    }
+
+    public function customSmsSave($id = null, Request $request){
+        $message    = $request->get('message');
+        $order      = $this->order->customSms($id, $message);
+
+        alertNotify((boolean)$order, "Sms sent", $request);
+
+        return redirect(url('backend/order/detail/' . $id));
+    }
 }

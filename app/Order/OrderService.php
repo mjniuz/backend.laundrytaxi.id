@@ -220,6 +220,17 @@ class OrderService extends OrderRepository{
         return $order;
     }
 
+    public function customSms($orderId = null, $message = ''){
+        $order  = $this->find($orderId);
+        if(!$order){
+            return false;
+        }
+
+        $this->sms->customSms($order->user, $message);
+
+        return $order;
+    }
+
     public function pickupSuccess($orderId, $weight = 0,$count = 0){
         $order  = $this->find($orderId);
         if(!$order){

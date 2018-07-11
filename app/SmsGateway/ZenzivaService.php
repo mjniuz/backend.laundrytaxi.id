@@ -78,4 +78,8 @@ class ZenzivaService{
         $sms    = "Hi pelanggan LaundryTaxi " . $user->name . ", laundry no ". $order->invoice_no ." telah dikirim, jika ada masalah dengan laundry kamu, bisa hubungi CS no: " . $this->cs . ", Terimakasih silahkan order kembali!!";
         $this->send($sms, $user->phone);
     }
+
+    public function customSms($user, $message){
+        $this->send($message, $user->phone);
+    }
 }

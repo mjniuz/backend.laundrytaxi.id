@@ -33,6 +33,9 @@
                                             <i class="fa fa-check"></i> Set Delivered
                                         </a>
                                      @endif
+                                        <a href="{{ url('backend/order/custom-sms/' . $order->id ) }}" class="btn btn-sm btn-warning">
+                                            <i class="fa fa-envelope"></i> Custom SMS
+                                        </a>
                                 <a href="{{ url('backend/order') }}" class="btn btn-sm btn-primary">
                                     <i class="fa fa-reply-all"></i> Back
                                 </a>
