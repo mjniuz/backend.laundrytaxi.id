@@ -261,7 +261,7 @@ class OrderRepository{
         return [
             [
                 'id'    => 1,
-                'name'  => 'Cuci Gosok 6.000/kg 2 Hari',
+                'name'  => 'Cuci Gosok 6rb/kg 2 Hari',
                 'description'   => 'Cuci Gosok diproses dalam 2 hari kerja, Gratis antar jemput',
                 'price_per_kg'  => 6000,
                 'min'   => 0,
@@ -272,7 +272,7 @@ class OrderRepository{
             ],
             [
                 'id'    => 2,
-                'name'  => 'Cuci Gosok 7.000/kg 2 Hari',
+                'name'  => 'Cuci Gosok 7rb/kg 2 Hari',
                 'description'   => 'Cuci Gosok diproses dalam 2 hari kerja, Gratis antar jemput',
                 'price_per_kg'  => 7000,
                 'min'   => 0,
@@ -283,7 +283,7 @@ class OrderRepository{
             ],
             [
                 'id'    => 3,
-                'name'  => 'Cuci Gosok Expr 8.000/kg 1 Hari',
+                'name'  => 'Cuci Gosok Expr 8rb/kg 1 Hari',
                 'description'   => 'Cuci Gosok Ekspress diproses dalam 1 hari kerja',
                 'price_per_kg'  => 8000,
                 'min'   => 0,
@@ -294,7 +294,7 @@ class OrderRepository{
             ],
             [
                 'id'    => 4,
-                'name'  => 'Cuci Gosok 1.000/kg 2 Hari',
+                'name'  => 'Cuci Gosok 1rb/kg 2 Hari',
                 'description'   => 'Promo pendaftaran pertama Cuci Gosok 1000/kg, gratis antar jemput, max 10kg, jika lebih dari 10kg, akan dikenakan 5000/kg setelahnya',
                 'price_per_kg'  => 1000,
                 'min'   => 0,
@@ -305,7 +305,7 @@ class OrderRepository{
             ],
             [
                 'id'    => 5,
-                'name'  => 'Cuci Gosok 2.000/kg 2 Hari',
+                'name'  => 'Cuci Gosok 2rb/kg 2 Hari',
                 'description'   => 'Promo pendaftaran trx ke 2 Cuci mesin Gosok 2000/kg, gratis antar jemput, max 10kg, jika lebih dari 10kg, akan dikenakan 6000/kg setelahnya',
                 'price_per_kg'  => 2000,
                 'min'   => 0,
@@ -316,7 +316,7 @@ class OrderRepository{
             ],
             [
                 'id'    => 6,
-                'name'  => 'Cuci Lipat 3.000/kg 2 Hari',
+                'name'  => 'Cuci Lipat 3rb/kg 2 Hari',
                 'description'   => 'Promo pendaftaran trx ke 3 Cuci mesin & Lipat saja 3000/kg, gratis antar jemput, max 10kg, jika lebih dari 10kg, akan dikenakan 5000/kg setelahnya',
                 'price_per_kg'  => 3000,
                 'min'   => 0,
@@ -327,7 +327,7 @@ class OrderRepository{
             ],
             [
                 'id'    => 7,
-                'name'  => 'Cuci Lipat 4.000/kg 2 Hari',
+                'name'  => 'Cuci Lipat 4rb/kg 2 Hari',
                 'description'   => 'Promo pendaftaran trx ke 4 Cuci mesin & Lipat saja 4000/kg, gratis antar jemput, max 10kg, jika lebih dari 10kg, akan dikenakan 5000/kg setelahnya',
                 'price_per_kg'  => 4000,
                 'min'   => 0,
@@ -338,7 +338,7 @@ class OrderRepository{
             ],
             [
                 'id'    => 8,
-                'name'  => 'Cuci Gosok 4.000/kg 2 Hari',
+                'name'  => 'Cuci Gosok 4rb/kg 2 Hari',
                 'description'   => 'Promo Cuci mesin & Gosok 4000/kg, gratis antar jemput, max 10kg, jika lebih dari 10kg, akan dikenakan 6000/kg setelahnya',
                 'price_per_kg'  => 4000,
                 'min'   => 0,
@@ -349,7 +349,7 @@ class OrderRepository{
             ],
             [
                 'id'    => 9,
-                'name'  => 'Cuci Lipat 1.000/kg 2 Hari',
+                'name'  => 'Cuci Lipat 1rb/kg 2 Hari',
                 'description'   => 'Cuci Mesin & Lipat saja 1000/kg, gratis antar jemput, max 10kg, jika lebih dari 10kg, akan dikenakan 5000/kg setelahnya',
                 'price_per_kg'  => 1000,
                 'min'   => 0,
@@ -360,7 +360,7 @@ class OrderRepository{
             ],
             [
                 'id'    => 10,
-                'name'  => 'Cuci Lipat 2.000/kg 2 Hari',
+                'name'  => 'Cuci Lipat 2rb/kg 2 Hari',
                 'description'   => 'Promo pendaftaran trx ke 2 Cuci mesin & Lipat saja 2000/kg, gratis antar jemput, max 10kg, jika lebih dari 10kg, akan dikenakan 5000/kg setelahnya',
                 'price_per_kg'  => 2000,
                 'min'   => 0,
@@ -371,7 +371,7 @@ class OrderRepository{
             ],
             [
                 'id'    => 11,
-                'name'  => 'Cuci Gosok 5.000/kg 2 Hari',
+                'name'  => 'Cuci Gosok 5rb/kg 2 Hari',
                 'description'   => 'Promo Cuci mesin & Gosok 5000/kg, gratis antar jemput, max 10kg, jika lebih dari 10kg, akan dikenakan 6000/kg setelahnya',
                 'price_per_kg'  => 5000,
                 'min'   => 0,
@@ -382,7 +382,7 @@ class OrderRepository{
             ],
             [
                 'id'    => 12,
-                'name'  => 'Cuci Kucek 7.000/kg 2 Hari',
+                'name'  => 'Cuci Kucek 7rb/kg 2 Hari',
                 'description'   => 'Promo Cuci KUCEK & Gosok 7000/kg (Lebih bersih di sela-sela baju), gratis antar jemput. Dikerjakan oleh tenaga cuci profesional dengan tangan, tanpa mesin',
                 'price_per_kg'  => 7000,
                 'min'   => 0,
@@ -393,7 +393,7 @@ class OrderRepository{
             ],
             [
                 'id'    => 13,
-                'name'  => 'Cuci Kucek 10.000/kg 2 Hari',
+                'name'  => 'Cuci Kucek 10rb/kg 2 Hari',
                 'description'   => 'Promo Cuci KUCEK & Gosok 10.000/kg (Lebih bersih di sela-sela baju), gratis antar jemput. Dikerjakan oleh tenaga cuci profesional dengan tangan, tanpa mesin',
                 'price_per_kg'  => 10.000,
                 'min'   => 0,
@@ -401,6 +401,17 @@ class OrderRepository{
                 'after_max' => 0,
                 'promo' => '10000_per_kg_cuci_gosok_kucek',
                 'key'   => '10000_per_kg_cuci_gosok_kucek'
+            ],
+            [
+                'id'    => 14,
+                'name'  => 'Gosok saja 3rb/kg 2 Hari',
+                'description'   => 'Promo Jasa Gosok baju yang telah Anda cuci dirumah, lebih rapi dan wangi tanpa ribet',
+                'price_per_kg'  => 3.000,
+                'min'   => 0,
+                'max'   => 10,
+                'after_max' => 4000,
+                'promo' => '3000_per_kg_gosok_saja',
+                'key'   => '3000_per_kg_gosok_saja'
             ],
         ];
     }
