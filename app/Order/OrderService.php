@@ -281,6 +281,7 @@ class OrderService extends OrderRepository{
     private function _packageAddPromo(){
         return [
             $this->_allPackage()[8],    // 1000 cuci lipat
+            $this->_allPackage()[13],   // 3000 gosok saja
             $this->_allPackage()[7]     // 4000 cuci gosok
         ];
     }
