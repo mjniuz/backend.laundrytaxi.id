@@ -413,6 +413,17 @@ class OrderRepository{
                 'promo' => '3000_per_kg_gosok_saja',
                 'key'   => '3000_per_kg_gosok_saja'
             ],
+            [
+                'id'    => 15,
+                'name'  => 'Gosok saja 4000/kg 2 Hari',
+                'description'   => 'Jasa Gosok baju yang telah Anda cuci dirumah, lebih rapi dan wangi tanpa ribet',
+                'price_per_kg'  => 4000,
+                'min'   => 0,
+                'max'   => 0,
+                'after_max' => 0,
+                'promo' => '4000_per_kg_gosok_saja',
+                'key'   => '4000_per_kg_gosok_saja'
+            ],
         ];
     }
 
