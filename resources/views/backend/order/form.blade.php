@@ -39,6 +39,18 @@
                             <p class="help-block">{{ $errors->first('user_id') }}</p>
                         @endif
                     </div>
+                    <div class="form-group{{ $errors->has('merchant_id') ? ' has-error' : '' }}">
+                        <label for="user_id">User</label>
+                        <select class="form-control" id="merchant_id" name="merchant_id">
+                            <option value="">Pilih merchant</option>
+                            @foreach($merchants as $merchant)
+                                <option value="{{ $merchant->id }}">{{ $merchant->name }}</option>
+                            @endforeach
+                        </select>
+                        @if($errors->has('merchant_id'))
+                            <p class="help-block">{{ $errors->first('merchant_id') }}</p>
+                        @endif
+                    </div>
                     <div class="form-group{{ $errors->has('full_name') ? ' has-error' : '' }}">
                         <label for="full_name">Phone</label>
                         <input type="text" name="full_name" class="form-control" placeholder="Full Name" value="{{ !empty(old('full_name')) ? old('full_name') : '' }}" id="full_name" required>

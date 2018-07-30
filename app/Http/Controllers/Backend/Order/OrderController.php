@@ -2,16 +2,18 @@
 
 namespace App\Http\Controllers\Backend\Order;
 
+use App\Merchant\MerchantRepository;
 use App\Order\OrderService;
 use Illuminate\Http\Request;
 use Illuminate\Routing\Controller;
 
 class OrderController extends Controller
 {
-    protected $order;
+    protected $order,$merchant;
 
-    public function __construct(OrderService $order) {
+    public function __construct(OrderService $order, MerchantRepository $merchant) {
         $this->order    = $order;
+        $this->merchant = $merchant;
     }
 
     public function index(Request $request){
@@ -22,6 +24,7 @@ class OrderController extends Controller
     }
 
     public function detail($id = null){
+        $merchants  = $this->merchant->getAll();
         $order      = $this->order->find($id);
         $package    = $this->order->_allPackage();
         $package    = !empty($order->package_id) ? $package[($order->package_id - 1)] : 0;
@@ -29,7 +32,7 @@ class OrderController extends Controller
         //dd($details);
 
 
-        return view('backend.order.detail', compact('order', 'package', 'details'));
+        return view('backend.order.detail', compact('order', 'package', 'details','merchants'));
     }
 
     public function updateForm($id = null, Request $request){
@@ -65,7 +68,9 @@ class OrderController extends Controller
 
     public function createForm(Request $request){
         $packages   = $this->order->_allPackage();
-        return view('backend.order.form', compact('order', 'packages'));
+        $merchants  = $this->merchant->getAll();
+
+        return view('backend.order.form', compact('order', 'packages','merchants'));
     }
 
     public function create(Request $request){
@@ -92,5 +97,14 @@ class OrderController extends Controller
         alertNotify((boolean)$order, "Sms sent", $request);
 
         return redirect(url('backend/order/detail/' . $id));
+    }
+
+    public function assignMerchant($orderId, Request $request){
+        $merchantId = $request->get('merchant_id');
+        $result     = $this->order->assignMerchant($orderId,$merchantId);
+
+        alertNotify($result['status'], $result['message'], $request);
+
+        return redirect(url('backend/order/detail/' . $orderId));
     }
 }

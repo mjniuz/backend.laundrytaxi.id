@@ -47,6 +47,31 @@ $menu   = [
             ]
         ]
     ],[
+        "title" => "Merchant",
+        "link"  => "#",
+        "icon"  => "home",
+        "as"    => "merchant.",
+        "sub"   => [
+            [
+                "title" => "List All",
+                "link"  => "merchant",
+                "icon"  => "circle-o",
+                "as"    => "",
+            ],
+            [
+                "title" => "Create",
+                "link"  => "merchant/form",
+                "icon"  => "pencil",
+                "as"    => "",
+            ],
+            [
+                "title" => "Balance History",
+                "link"  => "merchant/balances",
+                "icon"  => "money",
+                "as"    => "",
+            ]
+        ]
+    ],[
         "title" => "Administrator",
         "link"  => "#",
         "icon"  => "vcard-o",

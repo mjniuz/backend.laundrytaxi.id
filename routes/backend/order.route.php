@@ -15,4 +15,7 @@ Route::group(['prefix' => 'order', 'as' => 'order.', 'namespace' => 'Order'], fu
     Route::post('/save/{id?}', 'OrderController@create');
     Route::get('/custom-sms/{id?}', 'OrderController@customSmsForm');
     Route::post('/custom-sms-save/{id?}', 'OrderController@customSmsSave');
+
+
+    Route::post('/assign-merchant/{id?}', 'OrderController@assignMerchant');
 });

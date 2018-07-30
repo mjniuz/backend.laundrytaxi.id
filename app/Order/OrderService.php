@@ -2,6 +2,7 @@
 
 namespace App\Order;
 
+use App\Merchant\Merchant;
 use App\Merchant\MerchantRepository;
 use App\SmsGateway\ZenzivaService;
 use App\User\UserRepository;
@@ -31,10 +32,27 @@ class OrderService extends OrderRepository{
                 return true;
             case 'delivered_at':
                 $this->sms->delivered($user, $order);
+                // add balance to merchant
+                $this->_addBalanceMerchantFinishedOrder($order);
                 return true;
         }
 
         return false;
+    }
+
+    private function _addBalanceMerchantFinishedOrder($order){
+        $inputs['in_out']   = 'in';
+        $inputs['message']  = 'Fee order ' . $order->invoice_no . ', ' . number_format($order->actual_weight,0) . 'kg';
+        $inputs['order_id'] = $order->id;
+        $inputs['amount']   = $this->_calculateMerchantFee($order) * $order->actual_weight;
+        $merchantRepo   = new MerchantRepository();
+        return $merchantRepo->addTransactionBalance($order->merchant_id, $inputs);
+    }
+
+    private function _calculateMerchantFee($order){
+        $package    = $this->_allPackage()[($order->package_id - 1)];
+
+        return $package['merchant_fee_per_kg'];
     }
 
     public function makeOrder($input){
@@ -51,8 +69,12 @@ class OrderService extends OrderRepository{
         }
 
         // find merchant
+        $merchantId     = !empty($input->merchant_id) ? $input->merchant_id : 1; // hardcode
         $merchantRepo   = new MerchantRepository();
-        $merchant       = $merchantRepo->find(1);   // hard code
+        $merchant       = $merchantRepo->find($merchantId);
+        if(!$merchant){
+            return false;
+        }
 
         // check package
         $package        = $this->_allPackage();
@@ -231,6 +253,43 @@ class OrderService extends OrderRepository{
         $this->sms->customSms($order->user, $message);
 
         return $order;
+    }
+
+    public function assignMerchant($orderId,$merchantId){
+        $order  = $this->find($orderId);
+        if(!$order){
+            return [
+                'status'    => false,
+                'message'   => "Order tidak ditemukan"
+            ];
+        }
+
+        $merchantRepo   = new MerchantRepository();
+        $merchant       = $merchantRepo->find($merchantId);
+        if(!$merchant){
+            return [
+                'status'    => false,
+                'message'   => "Merchant tidak ditemukan"
+            ];
+        }
+
+        if(!is_null($merchant->suspended_at)){
+            return [
+                'status'    => false,
+                'message'   => "Merchant disuspend hingga " . $merchant->unsuspend_schedule
+            ];
+        }
+
+        $order->merchant_id = $merchant->id;
+        $order->save();
+
+        $message    = "Hallo merchant, terdapat order baru dari " . $order->user->name . ", dan akan diantar kurir segera tempat Anda. by LaundryTaxi.id";
+        $this->sms->send($message, $merchant->phone);
+
+        return [
+            'status'    => true,
+            'message'   => 'Assign order to new merchant success'
+        ];
     }
 
     public function pickupSuccess($orderId, $weight = 0,$count = 0){

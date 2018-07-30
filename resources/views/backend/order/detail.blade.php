@@ -64,6 +64,17 @@
                                     </td>
                                 </tr>
                                 <tr>
+                                    <td valign="top"><strong>Merchant</strong></td>
+                                    <td valign="top">
+                                        <a href="{{ url('backend/merchant/detail/' . $order->merchant->id) }}" target="_blank">
+                                            {{ $order->merchant->name }}
+                                        </a>
+                                        <a href="#" class="btn btn-warning btn-xs"  data-toggle="modal" data-target="#modal-assign-merchant">
+                                            <i class="fa fa-pencil"></i> Assign Merchant
+                                        </a>
+                                    </td>
+                                </tr>
+                                <tr>
                                     <td valign="top"><strong>Order Note</strong></td>
                                     <td valign="top">
                                         {{ $order->note }}
@@ -230,44 +241,34 @@
                             </tbody>
                         </table>
                     </div>
-                    <div class="col-md-12">
-                        <table class="table table-bordered table-striped">
-                            <tbody>
-                            </tbody>
-                        </table>
-                    </div>
                 </div>
                 <div class="pull-right">
-                    <div id="modal-add-tracking" class="modal fade" role="dialog">
+                    <div id="modal-assign-merchant" class="modal fade" role="dialog">
                         <div class="modal-dialog">
                             <!-- Modal content-->
                             <div class="modal-content">
                                 <div class="modal-header">
                                     <button type="button" class="close" data-dismiss="modal">&times;</button>
                                     <h4 class="modal-title" id="modal-add-tracking-title">
-                                        Tracking Note
+                                        Assign to new merchant
                                     </h4>
                                 </div>
                                 <div class="modal-body">
-                                    {{ Form::open(['url' => url('backend/yiwugo/order-add-tracking/'),
+                                    {{ Form::open(['url' => url('backend/order/assign-merchant/' . $order->id),
                                         'class' => 'form',
                                         'autocomplete'  => 'off',
-                                        'method'    => 'get']) }}
+                                        'method'    => 'post']) }}
                                     <div class="box-body pad">
-                                        <input type="hidden" name="delivery_id" class="form-control" value="">
-                                        <div class="form-group{{ $errors->has('tracking') ? ' has-error' : '' }}">
-                                            <label for="tracking">Tracking Number</label>
-                                            <input type="text" name="tracking" class="form-control" placeholder="Tracking Number" value="" id="tracking" required>
-                                            <input type="hidden" name="id" value="" id="product-id">
-                                        @if($errors->has('tracking'))
-                                                <p class="help-block">{{ $errors->first('tracking') }}</p>
-                                            @endif
-                                        </div>
-                                        <div class="form-group{{ $errors->has('tracking_note') ? ' has-error' : '' }}">
-                                            <label for="status">Note</label>
-                                            <textarea name="tracking_note" class="form-control" id="tracking_note"></textarea>
-                                            @if($errors->has('tracking_note'))
-                                                <p class="help-block">{{ $errors->first('tracking_note') }}</p>
+                                        <div class="form-group{{ $errors->has('merchant_id') ? ' has-error' : '' }}">
+                                            <label for="merchant_id">Merchant Name</label>
+                                            <select class="form-control" name="merchant_id" id="merchant_id" required>
+                                                <option value="">Pilih Merchant</option>
+                                                @foreach($merchants as $merchant)
+                                                    <option value="{{ $merchant->id }}">{{ $merchant->name }}</option>
+                                                @endforeach
+                                            </select>
+                                            @if($errors->has('merchant_id'))
+                                                <p class="help-block">{{ $errors->first('merchant_id') }}</p>
                                             @endif
                                         </div>
                                         <button type="submit" class="btn btn-success confirm">

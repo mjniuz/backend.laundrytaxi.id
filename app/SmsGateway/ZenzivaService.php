@@ -37,7 +37,7 @@ class ZenzivaService{
     }
 
     public function customerOrderSMS($user){
-        $sms = "Hi pelanggan LaundryTaxi ". $user->name .", Pesanan laundry kamu akan segera dijemput oleh merchant kami pada jam kerja, harap pastikan nomor kamu aktif terus yaa!!";
+        $sms = "Hi pelanggan LaundryTaxi ". $user->name .", Pesanan laundry kamu akan segera dijemput oleh merchant kami pada jam & hari kerja, harap pastikan nomor kamu aktif terus yaa!!";
         $this->send($sms, $user->phone);
     }
 
@@ -47,8 +47,8 @@ class ZenzivaService{
     }
 
     public function merchantOrderSMS($merchant, $user){
-        $sms = "Hi merhcant LaundryTaxi, Ada pesanan laundry untuk kamu dari " . $user->name . ", ". $user->phone .", kamu bisa check di aplikasi kamu sekarang!!";
-        //$this->send($sms, $merchant->phone);
+        $sms = "Hi merhcant LaundryTaxi, Ada pesanan laundry untuk kamu dari " . $user->name . ", ". $user->phone .", dan akan diantar kurir segera. by LaundryTaxi.id";
+        $this->send($sms, $merchant->phone);
         $this->send($sms, '081806423887'); // alan
         $this->send($sms, '083806439028'); // aris
     }

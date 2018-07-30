@@ -48,7 +48,6 @@
                             <th>Name</th>
                             <th>Email</th>
                             <th>Roles</th>
-                            <th>Group</th>
                             <th>Action</th>
                         </tr>
                     </thead>
@@ -62,7 +61,6 @@
                                         {{ $role->role->name . ", "}}
                                     @endforeach
                                 </td>
-                                <td>{{ $user->group->title }}</td>
                                 <td>
                                     <a href="{{ url('backend/administrator/edit/'. $user->id) }}" class="btn btn-sm btn-primary">Edit</a>
                                     <a href="{{ url('backend/administrator/role/user/'. $user->id) }}" class="btn btn-sm btn-warning">Role</a>
