@@ -88,6 +88,26 @@
                         @if(Session::has('status'))
                             <p class="alert alert-{{ Session::get('alert-class', 'info') }}">{{ Session::get('status') }}</p>
                         @endif
+                        <div class="row">
+                            <div class="col-md-4">
+                                <table class="table table-striped">
+                                    <tbody>
+                                    <tr>
+                                        <td>Total KG Actual</td>
+                                        <td>
+                                            {{ $orders->sum('actual_weight') }}Kg
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td>Total Income</td>
+                                        <td>
+                                            {{ number_format($orders->sum('grand_total'),0) }}
+                                        </td>
+                                    </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
                         <div class="table-responsive">
                             <table class="table table-bordered table-hover">
                                 <thead>
