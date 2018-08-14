@@ -22,7 +22,8 @@ class OrderRepository{
         if($paginate){
             $orders     = Order::with(['user']);
         }else{
-            $orders     = Order::with([])->select(['actual_weight','grand_total']);
+            $orders     = Order::with([])->select(['actual_weight','grand_total'])
+            ->where('status','<>','rejected');
         }
 
         if(!empty($filters['invoice_no'])){
