@@ -370,7 +370,7 @@ class OrderRepository{
             [
                 'id'    => 10,
                 'name'  => 'Cuci Lipat 2rb/kg 2 Hari',
-                'description'   => 'Promo pendaftaran trx ke 2 Cuci mesin & Lipat saja 2000/kg, gratis antar jemput, max 10kg, jika lebih dari 10kg, akan dikenakan 5000/kg setelahnya',
+                'description'   => 'Promo pendaftaran Cuci mesin & Lipat saja 2000/kg, gratis antar jemput, max 10kg, jika lebih dari 10kg, akan dikenakan 5000/kg setelahnya',
                 'price_per_kg'  => 2000,
                 'merchant_fee_per_kg' => 2000,
                 'min'   => 0,
