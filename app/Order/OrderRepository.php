@@ -71,6 +71,26 @@ class OrderRepository{
             }
         }
 
+        if(!empty($filters['date_start'])){
+            $dateStart      = date("Y-m-d 00:00:00", strtotime($filters['date_start']));
+            $dateEnd        = !empty($filters['date_end']) ? date("Y-m-d 23:59:59", strtotime($filters['date_end'])) : date("Y-m-d 23:59:59");
+            $dateType       = !empty($filters['date_type']) ? $filters['date_type'] : 'created_at';
+            switch ($dateType){
+                case 'created_at':
+                    $orders->whereBetween('created_at', [$dateStart,$dateEnd]);
+                    break;
+                case 'pickup_at':
+                    $orders->whereBetween('pickup_at', [$dateStart,$dateEnd]);
+                    break;
+                case 'process_at':
+                    $orders->whereBetween('process_at', [$dateStart,$dateEnd]);
+                    break;
+                case 'delivered_at':
+                    $orders->whereBetween('delivered_at', [$dateStart,$dateEnd]);
+                    break;
+            }
+        }
+
         return $orders->orderBy('id','desc')->paginate(25);
     }
 

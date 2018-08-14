@@ -28,13 +28,7 @@
                                         <input type="text" class="form-control" value="{{ isset($filters['name']) ? $filters['name'] : "" }}" name="name"/>
                                     </div>
                                 </div>
-                                <div class="col-md-2">
-                                    <div class="input-group">
-                                        <span class="input-group-addon">Phone</span>
-                                        <input type="text" class="form-control" value="{{ isset($filters['phone']) ? $filters['phone'] : "" }}" name="phone"/>
-                                    </div>
-                                </div>
-                                <div class="col-md-2">
+                                {{--<div class="col-md-2">
                                     <div class="input-group">
                                         <span class="input-group-addon">Status</span>
                                         <select class="form-control" name="status">
@@ -43,7 +37,7 @@
                                             <option value="approved" {{ (isset($filters['status']) AND $filters['status'] == 'approved') ? 'selected' : '' }}>Approved</option>
                                         </select>
                                     </div>
-                                </div>
+                                </div>--}}
                                 <div class="col-md-2">
                                     <div class="input-group">
                                         <span class="input-group-addon">Process On</span>
@@ -53,6 +47,30 @@
                                             <option value="process_at" {{ (isset($filters['pickup_at']) AND $filters['pickup_at'] == 'process_at') ? 'selected' : '' }}>Process</option>
                                             <option value="delivered_at" {{ (isset($filters['pickup_at']) AND $filters['pickup_at'] == 'delivered_at') ? 'selected' : '' }}>Delivered</option>
                                         </select>
+                                    </div>
+                                </div>
+                                <div class="col-md-2">
+                                    <div class="input-group">
+                                        <span class="input-group-addon">Date Type</span>
+                                        <select class="form-control" name="date_type">
+                                            <option value="" {{ (isset($filters['date_type']) AND $filters['date_type'] == '') ? 'selected' : '' }}>All</option>
+                                            <option value="created_at" {{ (isset($filters['date_type']) AND $filters['date_type'] == 'created_at') ? 'selected' : '' }}>Approved At</option>
+                                            <option value="pickup_at" {{ (isset($filters['date_type']) AND $filters['date_type'] == 'pickup_at') ? 'selected' : '' }}>Pickup At</option>
+                                            <option value="process_at" {{ (isset($filters['date_type']) AND $filters['date_type'] == 'process_at') ? 'selected' : '' }}>Process At</option>
+                                            <option value="delivered_at" {{ (isset($filters['date_type']) AND $filters['date_type'] == 'delivered_at') ? 'selected' : '' }}>Delivered At</option>
+                                        </select>
+                                    </div>
+                                </div>
+                                <div class="col-md-2">
+                                    <div class="input-group">
+                                        <span class="input-group-addon">Start</span>
+                                        <input type="text" class="form-control date" value="{{ isset($filters['date_start']) ? $filters['date_start'] : "" }}" name="date_start"/>
+                                    </div>
+                                </div>
+                                <div class="col-md-2">
+                                    <div class="input-group">
+                                        <span class="input-group-addon">End</span>
+                                        <input type="text" class="form-control date" value="{{ isset($filters['date_end']) ? $filters['date_end'] : "" }}" name="date_end"/>
                                     </div>
                                 </div>
                                 <div class="col-md-1 pull-right">
