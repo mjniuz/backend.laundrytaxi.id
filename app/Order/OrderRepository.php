@@ -18,8 +18,13 @@ class OrderRepository{
         return Order::with(['user','merchant'])->where('user_id', $userId)->orderBy('id','desc')->get();
     }
 
-    public function get($filters = []){
-        $orders     = Order::with(['user']);
+    public function get($filters = [], $paginate = false){
+        if($paginate){
+            $orders     = Order::with(['user']);
+        }else{
+            $orders     = Order::with([])->select(['actual_weight','grand_total']);
+        }
+
         if(!empty($filters['invoice_no'])){
             $orders->where('invoice_no', 'like', $filters['invoice_no']);
         }
@@ -91,7 +96,15 @@ class OrderRepository{
             }
         }
 
-        return $orders->orderBy('id','desc')->paginate(25);
+        if($paginate){
+            return $orders->orderBy('id','desc')->paginate($paginate);
+        }
+
+        return $orders->orderBy('id','desc')->get();
+    }
+
+    public function implementFilters($orders){
+
     }
 
     public function updateStatus($id,$inputs){

@@ -95,13 +95,13 @@
                                     <tr>
                                         <td>Total KG Actual (In 1 page)</td>
                                         <td>
-                                            {{ $orders->sum('actual_weight') }}Kg
+                                            {{ $sum->sum('actual_weight') }}Kg
                                         </td>
                                     </tr>
                                     <tr>
                                         <td>Total Income (In 1 page)</td>
                                         <td>
-                                            {{ number_format($orders->sum('grand_total'),0) }}
+                                            {{ number_format($sum->sum('grand_total'),0) }}
                                         </td>
                                     </tr>
                                     </tbody>

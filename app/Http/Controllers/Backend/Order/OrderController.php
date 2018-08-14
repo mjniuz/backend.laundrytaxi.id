@@ -18,9 +18,10 @@ class OrderController extends Controller
 
     public function index(Request $request){
         $filters    = $request->all();
-        $orders     = $this->order->get($filters);
+        $orders     = $this->order->get($filters,25);
+        $sum        = $this->order->get($filters,false);
 
-        return view('backend.order.index', compact('orders','filters'));
+        return view('backend.order.index', compact('orders','filters','sum'));
     }
 
     public function detail($id = null){
